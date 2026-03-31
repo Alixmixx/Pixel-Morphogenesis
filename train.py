@@ -49,7 +49,8 @@ for step in range(1, TOTAL_STEPS + 1):
     pool.replace_worst(indices, per_sample_loss)
 
     if step % 100 == 0:
-        print(f"step {step:>5}  loss {loss.item():.4f}  lr {sched.get_last_lr()[0]:.2e}")
+        lr = sched.get_last_lr()[0]
+        print(f"step {step:>5}  loss {loss.item():.4f}  lr {lr:.2e}")
 
     if step % SAVE_EVERY == 0:
         with torch.no_grad():
