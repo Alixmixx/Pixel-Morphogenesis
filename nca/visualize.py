@@ -10,19 +10,19 @@ def to_rgb(x):
     return (1.0 - a + rgb).clamp(0, 1)
 
 
-def generate_growth_frames(model, n_channels, size, n_steps=200, device="cpu"):
+def generate_growth_frames(model, n_channels, size, n_steps=200, device="cpu",
+                            seed_loc=None):
     state = make_seed(n_channels, size, batch_size=1).to(device)
     frames = []
     with torch.no_grad():
         for _ in range(n_steps):
-            state = model(state, steps=1, training=False)
+            state = model(state, steps=1, training=False, seed_loc=seed_loc)
             rgb = to_rgb(state[0]).permute(1, 2, 0).cpu().numpy()
             frames.append((rgb * 255).astype(np.uint8))
     return frames
 
 
 def save_gif(frames, path, fps=30, scale=4):
-    """Save frames as a GIF. scale enlarges each frame for visibility."""
     images = []
     for f in frames:
         img = Image.fromarray(f)

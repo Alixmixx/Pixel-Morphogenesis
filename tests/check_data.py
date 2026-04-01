@@ -1,4 +1,7 @@
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 import matplotlib.pyplot as plt
 from nca.data import load_target, make_seed
 
