@@ -1,17 +1,20 @@
+import numpy as np
 from PIL import Image
 import torch
-import torchvision.transforms as T
 
 
-def load_target(path, size=40):
-    img = Image.open(path).convert("RGBA").resize((size, size), Image.Resampling.LANCZOS)
-    tensor = T.ToTensor()(img)  # [4, H, W], values in [0, 1]
-    # premultiply RGB by alpha so transparent pixels have RGB=0
-    tensor[:3] *= tensor[3:]
-    return tensor
+def load_target(path, target_size=40, pad=8):
+    """Load RGBA image, premultiply alpha, pad to create breathing room."""
+    img = Image.open(path).convert("RGBA").resize((target_size, target_size), Image.Resampling.LANCZOS)
+    img = np.float32(np.array(img)) / 255.0
+    img[..., :3] *= img[..., 3:]  # premultiply RGB by alpha
+    img = img.transpose(2, 0, 1)  # [4, H, W]
+    img = np.pad(img, ((0, 0), (pad, pad), (pad, pad)))  # [4, H+2*pad, W+2*pad]
+    return torch.from_numpy(img)
 
 
 def make_seed(n_channels, size, batch_size=1):
     seed = torch.zeros(batch_size, n_channels, size, size)
-    seed[:, 3, size // 2, size // 2] = 1.0
+    mid = size // 2
+    seed[:, 3:, mid, mid] = 1.0  # alpha + all hidden channels = 1 at center
     return seed
