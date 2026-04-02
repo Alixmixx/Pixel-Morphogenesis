@@ -10,6 +10,7 @@ from torch.optim.lr_scheduler import MultiStepLR
 from nca.model import NCA
 from nca.data import load_target, make_seed
 from nca.pool import SamplePool
+from nca.damage import apply_damage
 
 TARGET_PATH  = "targets/skull.png"
 TARGET_SIZE  = 40
@@ -23,6 +24,7 @@ LR           = 2e-3
 WEIGHT_DECAY = 3e-5
 MILESTONES   = [3000, 6000, 9000]
 GAMMA        = 0.2
+DAMAGE_AFTER = 6000
 TOTAL_STEPS  = 12000
 SAVE_EVERY   = 500
 
@@ -43,6 +45,9 @@ Path("outputs").mkdir(exist_ok=True)
 for step in range(1, TOTAL_STEPS + 1):
     indices, batch = pool.sample(BATCH_SIZE)
     batch = batch.to(device)
+
+    if step > DAMAGE_AFTER and np.random.random() < 0.5:
+        batch = apply_damage(batch)
 
     n_steps = np.random.randint(64, 108)
     out = model(batch, steps=n_steps, training=True, seed_loc=seed_loc)
