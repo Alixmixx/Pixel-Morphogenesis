@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Morphogenesis</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Pixel Morphogenesis</h1>
+  <p class="subtitle">self-organizing pixels that grow and regenerate</p>
+
+  <div class="targets">
+    <button class="target-btn active" data-target="skull">skull</button>
+    <button class="target-btn" data-target="lizard">lizard</button>
+    <button class="target-btn" data-target="flower">flower</button>
+    <button class="target-btn" data-target="fire">fire</button>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <div class="controls">
+    <button id="reset">reset</button>
+    <button id="pause">pause</button>
+    <label>speed <span id="speed-label">1x</span></label>
+    <input type="range" id="speed" min="1" max="8" value="1">
+  </div>
+
+  <p class="status" id="status">loading...</p>
+  <p class="subtitle">click and drag to damage cells — watch them regenerate</p>
+
+  <footer>
+    <a href="https://github.com/amuller/Pixel-Morphogenesis">source</a>
+  </footer>
+
+  <script src="nca.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

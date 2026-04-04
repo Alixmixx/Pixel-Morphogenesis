@@ -28,6 +28,13 @@ class NCA(nn.Module):
         self.update[0].weight.data[...] = torch.from_numpy(kernel).float()[:, None, :, :]
         self.update[0].weight.requires_grad = False
 
+    @classmethod
+    def from_pretrained(cls, path, **kwargs):
+        model = cls(**kwargs)
+        model.load_state_dict(torch.load(path, map_location="cpu", weights_only=True))
+        model.eval()
+        return model
+
     def alive_mask(self, x: torch.Tensor) -> torch.Tensor:
         return F.max_pool2d(x[:, 3:4], 3, stride=1, padding=1) > 0.1
 
