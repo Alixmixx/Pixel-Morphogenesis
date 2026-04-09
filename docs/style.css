@@ -37,15 +37,8 @@ canvas {
   display: flex;
   gap: 0.6rem;
   align-items: center;
-  flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 1rem;
-}
-
-.targets {
-  display: flex;
-  gap: 0.4rem;
-  margin-bottom: 1.2rem;
 }
 
 button {
@@ -61,17 +54,6 @@ button {
 }
 
 button:hover { border-color: #555; }
-button.active { border-color: #888; color: #fff; }
-
-input[type="range"] {
-  width: 100px;
-  accent-color: #666;
-}
-
-label {
-  font-size: 0.75rem;
-  color: #888;
-}
 
 .status {
   font-size: 0.7rem;
