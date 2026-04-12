@@ -65,8 +65,6 @@ Key design choices:
 - **Sample pool** — 1024 partially-grown states train persistence and regeneration
 - **Damage injection** — after step 6K, random rectangular regions are zeroed out
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for a deep dive into every design decision.
-
 ## Quick start
 
 ```bash
@@ -114,7 +112,7 @@ outputs/          trained models and generated GIFs
 
 ## Interactive demo
 
-The `docs/` folder contains a standalone browser demo that runs the trained NCA in real time using vanilla JavaScript — no WebGL, no frameworks. The forward pass (~50M multiply-adds per step for a 56x56 grid) runs at 30fps in pure JS.
+The `docs/` folder contains a standalone browser demo that runs the trained NCA in real time using vanilla JavaScript. The forward pass (~50M multiply-adds per step for a 56x56 grid) runs at 30fps in pure JS.
 
 Click and drag on the canvas to destroy cells and watch the organism repair itself.
 
